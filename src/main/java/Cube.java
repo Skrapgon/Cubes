@@ -95,17 +95,24 @@ public class Cube {
         this.currentSide = this.currentSide.getSide("up");
     }
 
+    public void rotate(String direction) {
+        if (direction.equals("left")) this.rotateLeft();
+        else if (direction.equals("right")) this.rotateRight();
+        else if (direction.equals("up")) this.rotateUp();
+        else if (direction.equals("down")) this.rotateDown();
+    }
+
     public Side getCurrentSide() {
         return this.currentSide;
     }
 
-    public void changeRow(int index, int direction) {
-        if (direction == 0) currentSide.changeRow(index, "left", this.currentSide.getSide("right").getRow(index), 0);
+    public void changeRow(int index, String direction) {
+        if (direction.equals("left")) currentSide.changeRow(index, "left", this.currentSide.getSide("right").getRow(index), 0);
         else currentSide.changeRow(index, "right", this.currentSide.getSide("left").getRow(index), 0);
     }
 
-    public void changeColumn(int index, int direction) {
-        if (direction == 0) currentSide.changeColumn(index, "up", this.currentSide.getSide("down").getColumn(index), 0);
+    public void changeColumn(int index, String direction) {
+        if (direction.equals("up")) currentSide.changeColumn(index, "up", this.currentSide.getSide("down").getColumn(index), 0);
         else currentSide.changeColumn(index, "down", this.currentSide.getSide("up").getColumn(index), 0);
     }
 

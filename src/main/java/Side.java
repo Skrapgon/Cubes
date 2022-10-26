@@ -82,7 +82,10 @@ public class Side {
             else this.right.changeRow(row, direction, tmp, count+1);
         }
         if (row == 0) this.up.rotateMatrix(direction);
-        else if (row == 2) this.down.rotateMatrix(direction);
+        else if (row == 2) {
+            if (direction.equals("left")) this.down.rotateMatrix("right");
+            else this.down.rotateMatrix("left");
+        }
     }
 
     public void changeColumn(int column, String direction, int[] swap, int count) {
@@ -119,42 +122,6 @@ public class Side {
 
     public int[][] getMatrix() {
         return this.sideContent;
-    }
-
-    public void printSide() {
-        String row1 = String.format(
-            "%s %s %s\n%s %s %s\n",
-            Colors.Colors[this.sideContent[0][0]],
-            Colors.Colors[this.sideContent[0][1]],
-            Colors.Colors[this.sideContent[0][2]],
-            Colors.Colors[this.sideContent[0][0]],
-            Colors.Colors[this.sideContent[0][1]],
-            Colors.Colors[this.sideContent[0][2]]
-        );
-
-        String row2 = String.format(
-            "%s %s %s\n%s %s %s\n",
-            Colors.Colors[this.sideContent[1][0]],
-            Colors.Colors[this.sideContent[1][1]],
-            Colors.Colors[this.sideContent[1][2]],
-            Colors.Colors[this.sideContent[1][0]],
-            Colors.Colors[this.sideContent[1][1]],
-            Colors.Colors[this.sideContent[1][2]]
-        );
-
-        String row3 = String.format(
-            "%s %s %s\n%s %s %s",
-            Colors.Colors[this.sideContent[2][0]],
-            Colors.Colors[this.sideContent[2][1]],
-            Colors.Colors[this.sideContent[2][2]],
-            Colors.Colors[this.sideContent[2][0]],
-            Colors.Colors[this.sideContent[2][1]],
-            Colors.Colors[this.sideContent[2][2]]
-        );
-
-        System.out.println(row1);
-        System.out.println(row2);
-        System.out.println(row3);
     }
 
     public Side getSide(String side){
