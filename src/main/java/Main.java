@@ -1,29 +1,29 @@
 package main.java;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     
     public static void help() {
         System.out.println("Кубик рубика 2D");
-        System.out.println("Для поворота кубика налево введите \"a\"");
-        System.out.println("Для поворота кубика направо введите \"d\"");
-        System.out.println("Для поворота кубика вверх введите \"w\"");
-        System.out.println("Для поворота кубика вниз введите \"s\"");
-        System.out.println("Для поворота столбца введите \"e\"");
-        System.out.println("Для поворота строки введите \"q\"");
+        System.out.println("Для поворота кубика/горизонтального ряда налево введите \"a\"");
+        System.out.println("Для поворота кубика/горизонтального ряда направо введите \"d\"");
+        System.out.println("Для поворота кубика/вертикального ряда вверх введите \"w\"");
+        System.out.println("Для поворота кубика/вертикального ряда вниз введите \"s\"");
         System.out.println("Для выхода введите \"-\"");
     }
 
-    public static void helpRow() {
-        System.out.println("Для поворота строки влево введите \"a\"");
-        System.out.println("Для поворота строки вправо введите \"d\"");
+    public static void helpVerticalRotate() {
+        System.out.println("Для поворота кубика введите \"r\"");
+        System.out.println("Для поворота вертикального ряда введите номер столбца (нумерация начинается с 0 и идет до 2 включительно)");
     }
 
-    public static void helpColumn() {
-        System.out.println("Для поворота столбца вверх введите \"w\"");
-        System.out.println("Для поворота столбца вниз введите \"s\"");
+    public static void helpHorizontalRotate() {
+        System.out.println("Для поворота кубика введите \"r\"");
+        System.out.println("Для поворота горизонтального ряда введите номер строки (нумерация начинается с 0 и идет до 2 включительно)");
     }
 
     public static void cls() {
@@ -35,6 +35,17 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
+
+        HashMap<String, String> soo = new HashMap<>();
+        soo.put("a", "left");
+        soo.put("d", "right");
+        soo.put("w", "up");
+        soo.put("s", "down");
+
+        String[][] directions = new String[][] {
+            {"left", "right"},
+            {"up", "down"}
+        };
         
         Cube cubic = new Cube();
 
@@ -53,47 +64,74 @@ public class Main {
             index = randomIndex.nextInt(3);
             if (index == tmp) index = (index + 1) % 3;
             direction = randomDirection.nextInt(2);
-            if (cORr == 0) cubic.changeRow(index, direction);
-            else cubic.changeColumn(index, direction);
+            if (cORr == 0) cubic.changeRow(index, directions[0][direction]);
+            else cubic.changeColumn(index, directions[1][direction]);
         }
-
-        String m = "";
+        Builder builder = new Builder();
+        String m;
+        Scanner scanner = new Scanner(System.in);
         do {
+            // cls();
             help();
-            cubic.getCurrentSide().printSide();
+            builder.printFigure(cubic.getCurrentSide().getMatrix());
             System.out.print("Выберите действие: ");
-            m = System.console().readLine();
+            m = scanner.nextLine();
             
             switch (m) {
                 case ("a"):
-                    cubic.rotateLeft();
-                    break;
                 case ("d"):
-                    cubic.rotateRight();
-                    break;
-                case ("w"):
-                    cubic.rotateUp();
-                    break;
-                case("s"):
-                    cubic.rotateDown();
-                    break;
-                case ("e"):
-                    helpColumn();
-                    System.out.print("Выберите номер: ");
-                    char num = (char) System.in.read();
-                    switch (num) {
-                        case ('0'):
+                    helpHorizontalRotate();
+                    String vr = scanner.nextLine();
+                    switch (vr) {
+                        case ("r"):
+                            cubic.rotate(soo.get(m));
+                            break;
+                        case ("0"):
+                        case ("1"):
+                        case ("2"):
+                            System.out.println(m);
+                            cubic.changeRow(Integer.valueOf(vr), soo.get(m));
+                            break;
                     }
                     break;
-                case ("q"):
-                    helpRow();
+                case ("w"):
+                case("s"):
+                    helpVerticalRotate();
+                    String vc = scanner.nextLine();
+                    switch (vc) {
+                        case ("r"):
+                            cubic.rotate(soo.get(m));
+                            break;
+                        case ("0"):
+                        case ("1"):
+                        case ("2"):
+                            System.out.println(m);
+                            cubic.changeColumn(Integer.valueOf(vc), soo.get(m));
+                            break;
+                    }
                     break;
                 case ("-"):
                     break;
                 }
-            cls();
+            // cls();
         } while (!cubic.checkBuild() && !m.equals("-"));
 
-        System.out.println(cubic.checkBuild());
+        if (cubic.checkBuild()) {
+            System.out.println("Поздравляем! Вы смогли собрать кубик рубика");
+            builder.printFigure(cubic.getCurrentSide().getMatrix());
+        }
+        else System.out.println("Вы вышли из программы.");
+
+        /*builder.printFigure(cubic.getCurrentSide().getMatrix());
+        System.out.println("\n\n\n");
+        builder.printFigure(cubic.getCurrentSide().getSide("up").getMatrix());
+        System.out.println("\n\n\n");
+        builder.printFigure(cubic.getCurrentSide().getSide("left").getMatrix());
+        System.out.println("\n\n\n");
+        builder.printFigure(cubic.getCurrentSide().getSide("left").getSide("left").getMatrix());
+        System.out.println("\n\n\n");
+        builder.printFigure(cubic.getCurrentSide().getSide("right").getMatrix());
+        System.out.println("\n\n\n");
+        builder.printFigure(cubic.getCurrentSide().getSide("down").getMatrix());*/
     }
 }

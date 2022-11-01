@@ -81,7 +81,11 @@ public class Cube {
 
     public void rotateUp() {
         this.currentSide.getSide("up").rotateAdjacentSides("horizontal");
+        this.currentSide.getSide("up").rotateMatrix("left");
+        this.currentSide.getSide("up").rotateMatrix("left");
         this.currentSide.getSide("up").getSide("up").rotateAdjacentSides("horizontal");
+        this.currentSide.getSide("up").getSide("up").rotateMatrix("left");
+        this.currentSide.getSide("up").getSide("up").rotateMatrix("left");
         this.currentSide.getSide("left").rotateAdjacentSides("right");
         this.currentSide.getSide("right").rotateAdjacentSides("left");
         this.currentSide = this.currentSide.getSide("down");
@@ -89,24 +93,35 @@ public class Cube {
 
     public void rotateDown() {
         this.currentSide.getSide("down").rotateAdjacentSides("horizontal");
+        this.currentSide.getSide("down").rotateMatrix("left");
+        this.currentSide.getSide("down").rotateMatrix("left"); 
         this.currentSide.getSide("down").getSide("down").rotateAdjacentSides("horizontal");
+        this.currentSide.getSide("down").getSide("down").rotateMatrix("left");
+        this.currentSide.getSide("down").getSide("down").rotateMatrix("left");
         this.currentSide.getSide("left").rotateAdjacentSides("left");
         this.currentSide.getSide("right").rotateAdjacentSides("right");
         this.currentSide = this.currentSide.getSide("up");
+    }
+
+    public void rotate(String direction) {
+        if (direction.equals("left")) this.rotateLeft();
+        else if (direction.equals("right")) this.rotateRight();
+        else if (direction.equals("up")) this.rotateUp();
+        else if (direction.equals("down")) this.rotateDown();
     }
 
     public Side getCurrentSide() {
         return this.currentSide;
     }
 
-    public void changeRow(int index, int direction) {
-        if (direction == 0) currentSide.changeRow(index, "left", this.currentSide.getSide("right").getRow(index), 0);
-        else currentSide.changeRow(index, "right", this.currentSide.getSide("left").getRow(index), 0);
+    public void changeRow(int index, String direction) {
+        if (direction.equals("left")) this.currentSide.changeRow(index, "right", this.currentSide.getSide("left").getRow(index), 0);
+        else this.currentSide.changeRow(index, "left", this.currentSide.getSide("right").getRow(index), 0);
     }
 
-    public void changeColumn(int index, int direction) {
-        if (direction == 0) currentSide.changeColumn(index, "up", this.currentSide.getSide("down").getColumn(index), 0);
-        else currentSide.changeColumn(index, "down", this.currentSide.getSide("up").getColumn(index), 0);
+    public void changeColumn(int index, String direction) {
+        if (direction.equals("up")) this.currentSide.changeColumn(index, "down", this.currentSide.getSide("up").getColumn(index), 0);
+        else this.currentSide.changeColumn(index, "up", this.currentSide.getSide("down").getColumn(index), 0);
     }
 
     public boolean checkBuild() {
