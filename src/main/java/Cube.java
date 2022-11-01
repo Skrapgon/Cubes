@@ -115,13 +115,13 @@ public class Cube {
     }
 
     public void changeRow(int index, String direction) {
-        if (direction.equals("left")) this.currentSide.changeRow(index, "right", this.currentSide.getSide("left").getRow(index), 0);
-        else this.currentSide.changeRow(index, "left", this.currentSide.getSide("right").getRow(index), 0);
+        if (direction.equals("left")) this.currentSide.changeRow(index, "left", this.currentSide.getSide("right").getRow(index), 0);
+        else this.currentSide.changeRow(index, "rigth", this.currentSide.getSide("left").getRow(index), 0);
     }
 
     public void changeColumn(int index, String direction) {
-        if (direction.equals("up")) this.currentSide.changeColumn(index, "down", this.currentSide.getSide("up").getColumn(index), 0);
-        else this.currentSide.changeColumn(index, "up", this.currentSide.getSide("down").getColumn(index), 0);
+        if (direction.equals("up")) this.currentSide.changeColumn(index, "up", this.currentSide.getSide("down").getColumn(index), 0);
+        else this.currentSide.changeColumn(index, "down", this.currentSide.getSide("up").getColumn(index), 0);
     }
 
     public boolean checkBuild() {

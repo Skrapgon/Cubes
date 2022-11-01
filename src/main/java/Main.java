@@ -71,7 +71,7 @@ public class Main {
         String m;
         Scanner scanner = new Scanner(System.in);
         do {
-            // cls();
+            cls();
             help();
             builder.printFigure(cubic.getCurrentSide().getMatrix());
             System.out.print("Выберите действие: ");
@@ -89,7 +89,6 @@ public class Main {
                         case ("0"):
                         case ("1"):
                         case ("2"):
-                            System.out.println(m);
                             cubic.changeRow(Integer.valueOf(vr), soo.get(m));
                             break;
                     }
@@ -105,7 +104,6 @@ public class Main {
                         case ("0"):
                         case ("1"):
                         case ("2"):
-                            System.out.println(m);
                             cubic.changeColumn(Integer.valueOf(vc), soo.get(m));
                             break;
                     }
@@ -113,25 +111,15 @@ public class Main {
                 case ("-"):
                     break;
                 }
-            // cls();
+            cls();
         } while (!cubic.checkBuild() && !m.equals("-"));
+
+        scanner.close();
 
         if (cubic.checkBuild()) {
             System.out.println("Поздравляем! Вы смогли собрать кубик рубика");
             builder.printFigure(cubic.getCurrentSide().getMatrix());
         }
         else System.out.println("Вы вышли из программы.");
-
-        /*builder.printFigure(cubic.getCurrentSide().getMatrix());
-        System.out.println("\n\n\n");
-        builder.printFigure(cubic.getCurrentSide().getSide("up").getMatrix());
-        System.out.println("\n\n\n");
-        builder.printFigure(cubic.getCurrentSide().getSide("left").getMatrix());
-        System.out.println("\n\n\n");
-        builder.printFigure(cubic.getCurrentSide().getSide("left").getSide("left").getMatrix());
-        System.out.println("\n\n\n");
-        builder.printFigure(cubic.getCurrentSide().getSide("right").getMatrix());
-        System.out.println("\n\n\n");
-        builder.printFigure(cubic.getCurrentSide().getSide("down").getMatrix());*/
     }
 }
